@@ -1,0 +1,18 @@
+#Verify that the cluster is running
+kubectl cluster-info
+
+#Install the latest version of Tekton Pipelines:
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+
+#Monitor the installation:
+kubectl get pods --namespace tekton-pipelines --watch
+
+#Install the latest version of Tekton Dashboard:
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release-full.yaml
+
+#Monitor the installation:
+kubectl get pods --namespace tekton-pipelines --watch
+
+#By default, the Tekton Dashboard is not exposed outside the cluster.
+#To access it locally, use port-forwarding:
+kubectl port-forward --address 0.0.0.0 -n tekton-pipelines service/tekton-dashboard 9097:9097
